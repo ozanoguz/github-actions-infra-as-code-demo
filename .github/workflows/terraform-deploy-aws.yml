@@ -37,7 +37,7 @@ jobs:
 
       - name: FortiDevSec SAST Scan
         runs-on: ubuntu-latest
-      - uses: actions/checkout@v2
+        uses: actions/checkout@v2
          run: |
           env | grep -E "GITHUB_ACTIONS|GITHUB_RUN_NUMBER|GITHUB_REF_NAME|GITHUB_SHA" > /tmp/env
           docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest
