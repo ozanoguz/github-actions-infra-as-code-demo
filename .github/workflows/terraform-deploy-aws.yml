@@ -37,10 +37,11 @@ jobs:
 
       - name: FortiDevSec SAST Scan
       - uses: actions/checkout@v2
-         run: |
-          env | grep -E "GITHUB_ACTIONS|GITHUB_RUN_NUMBER|GITHUB_REF_NAME|GITHUB_SHA" > /tmp/env
-          docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest
-          docker run --rm --env-file /tmp/env --mount type=bind,source=$PWD,target=/scan registry.fortidevsec.forticloud.com/fdevsec_sast:latest
+         run: 
+          env: 
+           grep -E "GITHUB_ACTIONS|GITHUB_RUN_NUMBER|GITHUB_REF_NAME|GITHUB_SHA" > /tmp/env
+           docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest
+           docker run --rm --env-file /tmp/env --mount type=bind,source=$PWD,target=/scan registry.fortidevsec.forticloud.com/fdevsec_sast:latest
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
