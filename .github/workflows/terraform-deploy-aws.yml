@@ -19,15 +19,6 @@ on:
 # To be reviewed: https://securitylab.github.com/research/github-actions-preventing-pwn-requests/
 
 jobs:
-  build:
-   name: FortiDevSec
-   runs-on: ubuntu-latest
-    - name: SAST
-    - uses: actions/checkout@v2
-     run: env | grep -E "GITHUB_ACTIONS|GITHUB_RUN_NUMBER|GITHUB_REF_NAME|GITHUB_SHA" > /tmp/env
-          docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest
-          docker run --rm --env-file /tmp/env --mount type=bind,source=$PWD,target=/scan registry.fortidevsec.forticloud.com/fdevsec_sast:latest
-
   terraform:
     name: "Day 1 - Terraform"
     runs-on: ubuntu-latest
@@ -43,6 +34,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: FortiDevSec SAST Scan
+      - uses: actions/checkout@v2
+         run: |
+          env | grep -E "GITHUB_ACTIONS|GITHUB_RUN_NUMBER|GITHUB_REF_NAME|GITHUB_SHA" > /tmp/env
+          docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest
+          docker run --rm --env-file /tmp/env --mount type=bind,source=$PWD,target=/scan registry.fortidevsec.forticloud.com/fdevsec_sast:latest
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
