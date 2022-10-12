@@ -20,8 +20,9 @@ on:
 
 jobs:
   build:
+   name: FortiDevSec
    runs-on: ubuntu-latest
-   steps:
+  steps:
    – uses: actions/checkout@v2
  
    – name: SAST
@@ -29,7 +30,7 @@ jobs:
      env | grep -E "GITHUB_ACTIONS|GITHUB_RUN_NUMBER|GITHUB_REF_NAME|GITHUB_SHA" > /tmp/env
      docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest
      docker run --rm --env-file /tmp/env --mount type=bind,source=$PWD,target=/scan registry.fortidevsec.forticloud.com/fdevsec_sast:latest
-     
+
   terraform:
     name: "Day 1 - Terraform"
     runs-on: ubuntu-latest
